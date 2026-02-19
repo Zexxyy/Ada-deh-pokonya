@@ -1,195 +1,164 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday 💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💖</title>
 
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ffd6e8, #ffeef6);
-      font-family: 'Poppins', sans-serif;
-      text-align: center;
-      padding: 20px;
-      overflow: hidden;
-    }
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffd6e8,#ffeef6);
+  font-family:'Poppins',sans-serif;
+  text-align:center;
+  overflow:hidden;
+}
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 30px 25px;
-      max-width: 380px;
-      width: 100%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      animation: fadeIn 1s ease;
-      z-index: 2;
-    }
+.hidden{display:none;}
 
-    h1 {
-      color: #ff5e99;
-      margin-bottom: 10px;
-    }
+.card{
+  background:white;
+  border-radius:20px;
+  padding:30px 25px;
+  width:100%;
+  max-width:380px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  animation:fadeIn 1s ease;
+  z-index:2;
+}
 
-    p {
-      color: #555;
-      font-size: 15px;
-      line-height: 1.6;
-    }
+button{
+  margin-top:15px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:#ff5e99;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 12px;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-      font-size: 15px;
-      box-sizing: border-box;
-      text-align: center;
-    }
+button:hover{background:#ff3f86}
 
-    button {
-      margin-top: 15px;
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      background: #ff5e99;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+input{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  text-align:center;
+}
 
-    button:hover {
-      background: #ff3f86;
-    }
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
 
-    .result {
-      margin-top: 20px;
-      font-size: 15px;
-      color: #444;
-      display: none;
-      animation: pop 0.5s ease;
-    }
+/* Cake */
+.cake{
+  font-size:90px;
+  cursor:pointer;
+  animation:float 2s ease-in-out infinite;
+}
 
-    .emoji {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
 
-    /* Animasi umum */
-    .balloon, .heart, .confetti {
-      position: fixed;
-      pointer-events: none;
-      z-index: 1;
-    }
+/* Animations */
+.balloon,.heart,.confetti{
+  position:fixed;
+  pointer-events:none;
+}
 
-    .balloon {
-      bottom: -80px;
-      font-size: 32px;
-      animation: floatUp linear forwards;
-    }
+.balloon{
+  bottom:-80px;
+  font-size:32px;
+  animation:floatUp linear forwards;
+}
 
-    .heart {
-      top: -40px;
-      font-size: 24px;
-      animation: fallDown linear forwards;
-    }
+.heart{
+  top:-40px;
+  font-size:24px;
+  animation:fallDown linear forwards;
+}
 
-    .confetti {
-      top: -20px;
-      width: 10px;
-      height: 10px;
-      background: pink;
-      animation: fallDown linear forwards;
-    }
+.confetti{
+  top:-20px;
+  width:10px;
+  height:10px;
+  background:pink;
+  animation:fallDown linear forwards;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-120vh);opacity:0}
+}
 
-    @keyframes pop {
-      from { transform: scale(0.9); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes floatUp {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-120vh); opacity: 0; }
-    }
-
-    @keyframes fallDown {
-      from { transform: translateY(0) rotate(0deg); opacity: 1; }
-      to { transform: translateY(120vh) rotate(360deg); opacity: 0; }
-    }
-  </style>
+@keyframes fallDown{
+  from{transform:translateY(0) rotate(0);opacity:1}
+  to{transform:translateY(120vh) rotate(360deg);opacity:0}
+}
+</style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Hai Kamu 💕</h1>
-    <p>Ada sesuatu yang pengen aku sampein 🎂</p>
+<!-- STEP 1 -->
+<div class="card" id="step1">
+  <h2>I've got something for u 💕</h2>
+  <button onclick="toCake()">What's that?</button>
+</div>
 
-    <input type="text" id="nama" placeholder="Nama kamu 💖">
-    <input type="number" id="umur" placeholder="Umur kamu 🎉">
+<!-- STEP 2 -->
+<div class="card hidden" id="step2">
+  <p>Make a wish ✨</p>
+  <div class="cake" onclick="blowCandle()">🎂🕯️</div>
+  <p><small>(tap the cake)</small></p>
+</div>
 
-    <button onclick="tampilUcapan()">Buka Ucapannya 💌</button>
+<!-- STEP 3 -->
+<div class="card hidden" id="step3">
+  <h2>Hai Kamu 💖</h2>
+  <p>Ada sesuatu yang pengen aku sampein 🎂</p>
 
-    <div class="result" id="hasil">
-      <div class="emoji">🥳🎀💖</div>
-      <p id="teksUcapan"></p>
-    </div>
+  <input id="nama" placeholder="Nama kamu 💕">
+  <input id="umur" type="number" placeholder="Umur kamu 🎉">
+
+  <button onclick="showMessage()">Buka Ucapannya 💌</button>
+
+  <div class="hidden" id="hasil">
+    <p id="teksUcapan"></p>
   </div>
+</div>
 
-  <script>
-    function spawnBalloon() {
-      const el = document.createElement("div");
-      el.className = "balloon";
-      el.innerHTML = "🎈";
-      el.style.left = Math.random() * 100 + "vw";
-      el.style.animationDuration = (4 + Math.random() * 3) + "s";
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 7000);
-    }
+<script>
+function toCake(){
+  step1.classList.add("hidden");
+  step2.classList.remove("hidden");
+}
 
-    function spawnHeart() {
-      const el = document.createElement("div");
-      el.className = "heart";
-      el.innerHTML = "💖";
-      el.style.left = Math.random() * 100 + "vw";
-      el.style.animationDuration = (4 + Math.random() * 3) + "s";
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 7000);
-    }
+function blowCandle(){
+  step2.querySelector(".cake").innerHTML="🎂✨";
+  spawnConfetti();
+  setTimeout(()=>{
+    step2.classList.add("hidden");
+    step3.classList.remove("hidden");
+  },1200);
+}
 
-    function spawnConfetti() {
-      for (let i = 0; i < 20; i++) {
-        const el = document.createElement("div");
-        el.className = "confetti";
-        el.style.left = Math.random() * 100 + "vw";
-        el.style.background = ["#ff5e99", "#ffd6e8", "#ffeef6"][Math.floor(Math.random()*3)];
-        el.style.animationDuration = (3 + Math.random() * 2) + "s";
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 5000);
-      }
-    }
+function showMessage(){
+  const nama=nama.value;
+  const umur=umur.value;
+  if(!nama||!umur){alert("Isi dulu yaa 😆💗");return;}
 
-    function tampilUcapan() {
-      const nama = document.getElementById("nama").value;
-      const umur = document.getElementById("umur").value;
-
-      if (!nama || !umur) {
-        alert("Isi nama dan umur dulu yaa 😆💗");
-        return;
-      }
-
-      const pesanRahasia = `
+  const pesan=`
 Maaf ya kalo kesannya maksain banget hehehe.
 To be honest, aku sebenernya bukan suka doang sama kamu,
 bisa dikatakan lebih dari itu.
@@ -197,20 +166,50 @@ bisa dikatakan lebih dari itu.
 Karena kamu muncul pada saat aku lagi nggak kepengen sama siapa-siapa,
 tapi semenjak kemunculan kamu,
 entah kenapa hati ini rasanya menggebu-gebu lagi.
-      `;
+  `;
 
-      document.getElementById("teksUcapan").innerHTML = `
-        Selamat ulang tahun yang ke <b>${umur}</b>, <b>${nama}</b> 💖🎉<br><br>
-        ${pesanRahasia.replace(/\n/g, "<br>")}
-      `;
+  teksUcapan.innerHTML=
+  `Selamat ulang tahun yang ke <b>${umur}</b>, <b>${nama}</b> 💖🎉<br><br>`+
+  pesan.replace(/\n/g,"<br>");
 
-      document.getElementById("hasil").style.display = "block";
+  hasil.classList.remove("hidden");
 
-      spawnConfetti();
-      setInterval(spawnBalloon, 700);
-      setInterval(spawnHeart, 500);
-    }
-  </script>
+  setInterval(spawnBalloon,700);
+  setInterval(spawnHeart,500);
+}
+
+function spawnBalloon(){
+  const e=document.createElement("div");
+  e.className="balloon";
+  e.innerHTML="🎈";
+  e.style.left=Math.random()*100+"vw";
+  e.style.animationDuration=(4+Math.random()*3)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),7000);
+}
+
+function spawnHeart(){
+  const e=document.createElement("div");
+  e.className="heart";
+  e.innerHTML="💖";
+  e.style.left=Math.random()*100+"vw";
+  e.style.animationDuration=(4+Math.random()*3)+"s";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),7000);
+}
+
+function spawnConfetti(){
+  for(let i=0;i<25;i++){
+    const e=document.createElement("div");
+    e.className="confetti";
+    e.style.left=Math.random()*100+"vw";
+    e.style.background=["#ff5e99","#ffd6e8","#ffeef6"][Math.floor(Math.random()*3)];
+    e.style.animationDuration=(3+Math.random()*2)+"s";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),5000);
+  }
+}
+</script>
 
 </body>
 </html>
