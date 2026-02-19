@@ -20,4 +20,165 @@
     }
 
     .card {
-      background: whi
+      background: white;
+      border-radius: 20px;
+      padding: 30px 25px;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      animation: fadeIn 1s ease;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #ff5e99;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      font-size: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #ff5e99;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff3f86;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #444;
+      display: none;
+      line-height: 1.6;
+      animation: pop 0.5s ease;
+    }
+
+    .pulse {
+      animation: pulse 1.2s infinite;
+    }
+
+    .emoji {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .balloon {
+      position: fixed;
+      bottom: -100px;
+      font-size: 30px;
+      animation: floatUp linear forwards;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-120vh); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Hai Kamu 💕</h1>
+    <p>Ada sesuatu yang pengen aku sampein 🎂</p>
+
+    <input type="text" id="nama" placeholder="Nama kamu 💖">
+    <input type="number" id="umur" placeholder="Umur kamu 🎉">
+
+    <button onclick="tampilUcapan()">Buka Ucapannya 💌</button>
+
+    <div class="result" id="hasil">
+      <div class="emoji">🥳🎀💖</div>
+      <p id="teksUcapan"></p>
+    </div>
+  </div>
+
+  <script>
+    function spawnBalloon() {
+      const balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.innerHTML = "🎈";
+      balloon.style.left = Math.random() * 100 + "vw";
+      balloon.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 6000);
+    }
+
+    function startBalloons() {
+      setInterval(spawnBalloon, 600);
+    }
+
+    function tampilUcapan() {
+      const nama = document.getElementById("nama").value;
+      const umur = document.getElementById("umur").value;
+
+      if (nama === "" || umur === "") {
+        alert("Isi nama dan umur dulu yaa 😆💗");
+        return;
+      }
+
+      const pesanRahasia = `
+Maaf ya kalo kesannya maksain banget hehehe.
+To be honest, aku sebenernya bukan suka doang sama kamu,
+bisa dikatakan lebih dari itu.
+
+Karena kamu muncul pada saat aku lagi nggak kepengen sama siapa-siapa,
+tapi semenjak kemunculan kamu,
+entah kenapa hati ini rasanya menggebu-gebu lagi.
+      `;
+
+      document.getElementById("teksUcapan").innerHTML = `
+        Selamat ulang tahun yang ke <b>${umur}</b>, <b>${nama}</b> 💖🎉<br><br>
+        ${pesanRahasia.replace(/\n/g, "<br>")}
+      `;
+
+      document.getElementById("hasil").style.display = "block";
+      document.getElementById("teksUcapan").classList.add("pulse");
+      startBalloons();
+    }
+  </script>
+
+</body>
+</html>
+
