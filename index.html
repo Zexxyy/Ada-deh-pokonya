@@ -16,7 +16,7 @@
       font-family: 'Poppins', sans-serif;
       text-align: center;
       padding: 20px;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
     .card {
@@ -38,6 +38,7 @@
     p {
       color: #555;
       font-size: 15px;
+      line-height: 1.6;
     }
 
     input {
@@ -73,12 +74,7 @@
       font-size: 15px;
       color: #444;
       display: none;
-      line-height: 1.6;
       animation: pop 0.5s ease;
-    }
-
-    .pulse {
-      animation: pulse 1.2s infinite;
     }
 
     .emoji {
@@ -86,13 +82,31 @@
       margin-bottom: 10px;
     }
 
-    .balloon {
+    /* Animasi umum */
+    .balloon, .heart, .confetti {
       position: fixed;
-      bottom: -100px;
-      font-size: 30px;
-      animation: floatUp linear forwards;
       pointer-events: none;
       z-index: 1;
+    }
+
+    .balloon {
+      bottom: -80px;
+      font-size: 32px;
+      animation: floatUp linear forwards;
+    }
+
+    .heart {
+      top: -40px;
+      font-size: 24px;
+      animation: fallDown linear forwards;
+    }
+
+    .confetti {
+      top: -20px;
+      width: 10px;
+      height: 10px;
+      background: pink;
+      animation: fallDown linear forwards;
     }
 
     @keyframes fadeIn {
@@ -105,15 +119,14 @@
       to { transform: scale(1); opacity: 1; }
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
     @keyframes floatUp {
       from { transform: translateY(0); opacity: 1; }
       to { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    @keyframes fallDown {
+      from { transform: translateY(0) rotate(0deg); opacity: 1; }
+      to { transform: translateY(120vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
@@ -136,24 +149,42 @@
 
   <script>
     function spawnBalloon() {
-      const balloon = document.createElement("div");
-      balloon.className = "balloon";
-      balloon.innerHTML = "🎈";
-      balloon.style.left = Math.random() * 100 + "vw";
-      balloon.style.animationDuration = (3 + Math.random() * 3) + "s";
-      document.body.appendChild(balloon);
-      setTimeout(() => balloon.remove(), 6000);
+      const el = document.createElement("div");
+      el.className = "balloon";
+      el.innerHTML = "🎈";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = (4 + Math.random() * 3) + "s";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 7000);
     }
 
-    function startBalloons() {
-      setInterval(spawnBalloon, 600);
+    function spawnHeart() {
+      const el = document.createElement("div");
+      el.className = "heart";
+      el.innerHTML = "💖";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = (4 + Math.random() * 3) + "s";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 7000);
+    }
+
+    function spawnConfetti() {
+      for (let i = 0; i < 20; i++) {
+        const el = document.createElement("div");
+        el.className = "confetti";
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.background = ["#ff5e99", "#ffd6e8", "#ffeef6"][Math.floor(Math.random()*3)];
+        el.style.animationDuration = (3 + Math.random() * 2) + "s";
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 5000);
+      }
     }
 
     function tampilUcapan() {
       const nama = document.getElementById("nama").value;
       const umur = document.getElementById("umur").value;
 
-      if (nama === "" || umur === "") {
+      if (!nama || !umur) {
         alert("Isi nama dan umur dulu yaa 😆💗");
         return;
       }
@@ -174,11 +205,12 @@ entah kenapa hati ini rasanya menggebu-gebu lagi.
       `;
 
       document.getElementById("hasil").style.display = "block";
-      document.getElementById("teksUcapan").classList.add("pulse");
-      startBalloons();
+
+      spawnConfetti();
+      setInterval(spawnBalloon, 700);
+      setInterval(spawnHeart, 500);
     }
   </script>
 
 </body>
 </html>
-
