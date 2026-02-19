@@ -128,8 +128,8 @@ input{
   <h2>Hai Kamu 💖</h2>
   <p>Ada sesuatu yang pengen aku sampein 🎂</p>
 
-  <input id="nama" placeholder="Nama kamu 💕">
-  <input id="umur" type="number" placeholder="Umur kamu 🎉">
+  <input id="inputNama" placeholder="Nama kamu 💕">
+  <input id="inputUmur" type="number" placeholder="Umur kamu 🎉">
 
   <button onclick="showMessage()">Buka Ucapannya 💌</button>
 
@@ -140,25 +140,29 @@ input{
 
 <script>
 function toCake(){
-  step1.classList.add("hidden");
-  step2.classList.remove("hidden");
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.remove("hidden");
 }
 
 function blowCandle(){
-  step2.querySelector(".cake").innerHTML="🎂✨";
+  document.querySelector(".cake").innerHTML="🎂✨";
   spawnConfetti();
   setTimeout(()=>{
-    step2.classList.add("hidden");
-    step3.classList.remove("hidden");
+    document.getElementById("step2").classList.add("hidden");
+    document.getElementById("step3").classList.remove("hidden");
   },1200);
 }
 
 function showMessage(){
-  const nama=nama.value;
-  const umur=umur.value;
-  if(!nama||!umur){alert("Isi dulu yaa 😆💗");return;}
+  const nama = document.getElementById("inputNama").value;
+  const umur = document.getElementById("inputUmur").value;
 
-  const pesan=`
+  if(!nama || !umur){
+    alert("Isi dulu yaa 😆💗");
+    return;
+  }
+
+  const pesan = `
 Maaf ya kalo kesannya maksain banget hehehe.
 To be honest, aku sebenernya bukan suka doang sama kamu,
 bisa dikatakan lebih dari itu.
@@ -168,11 +172,11 @@ tapi semenjak kemunculan kamu,
 entah kenapa hati ini rasanya menggebu-gebu lagi.
   `;
 
-  teksUcapan.innerHTML=
-  `Selamat ulang tahun yang ke <b>${umur}</b>, <b>${nama}</b> 💖🎉<br><br>`+
-  pesan.replace(/\n/g,"<br>");
+  document.getElementById("teksUcapan").innerHTML =
+    `Selamat ulang tahun yang ke <b>${umur}</b>, <b>${nama}</b> 💖🎉<br><br>` +
+    pesan.replace(/\n/g,"<br>");
 
-  hasil.classList.remove("hidden");
+  document.getElementById("hasil").classList.remove("hidden");
 
   setInterval(spawnBalloon,700);
   setInterval(spawnHeart,500);
