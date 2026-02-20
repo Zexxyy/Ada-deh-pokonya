@@ -2,216 +2,163 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 💖</title>
+<title>For You</title>
 
 <style>
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#ffd6e8,#ffeef6);
-  font-family:'Poppins',sans-serif;
-  text-align:center;
-  overflow:hidden;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(120deg, #ffdee9, #b5fffc);
+  height: 100vh;
+  overflow: hidden;
 }
 
-.hidden{display:none;}
-
-.card{
-  background:white;
-  border-radius:20px;
-  padding:30px 25px;
-  width:100%;
-  max-width:380px;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
-  animation:fadeIn 1s ease;
-  z-index:2;
+.center {
+  text-align: center;
+  margin-top: 20vh;
 }
 
-button{
-  margin-top:15px;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:#ff5e99;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
+.hidden {
+  display: none;
 }
 
-button:hover{background:#ff3f86}
-
-input{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  border-radius:12px;
-  border:1px solid #ddd;
-  text-align:center;
+button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  background: #ff6f91;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-@keyframes fadeIn{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
+button:hover {
+  background: #ff4f7a;
 }
 
-/* Cake */
-.cake{
-  font-size:90px;
-  cursor:pointer;
-  animation:float 2s ease-in-out infinite;
+.cake {
+  font-size: 90px;
+  position: relative;
 }
 
-@keyframes float{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-10px)}
+.flame {
+  font-size: 32px;
+  cursor: pointer;
+  animation: flicker 1s infinite;
+  transition: transform 0.3s, opacity 0.3s;
 }
 
-/* Animations */
-.balloon,.heart,.confetti{
-  position:fixed;
-  pointer-events:none;
+@keyframes flicker {
+  0% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+  100% { transform: rotate(-5deg); }
 }
 
-.balloon{
-  bottom:-80px;
-  font-size:32px;
-  animation:floatUp linear forwards;
+#secret {
+  margin-top: 20px;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  animation: fadeIn 1.5s ease;
 }
 
-.heart{
-  top:-40px;
-  font-size:24px;
-  animation:fallDown linear forwards;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.confetti{
-  top:-20px;
-  width:10px;
-  height:10px;
-  background:pink;
-  animation:fallDown linear forwards;
-}
-
-@keyframes floatUp{
-  from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-120vh);opacity:0}
-}
-
-@keyframes fallDown{
-  from{transform:translateY(0) rotate(0);opacity:1}
-  to{transform:translateY(120vh) rotate(360deg);opacity:0}
+input {
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  text-align: center;
+  width: 140px;
+  margin-top: 10px;
 }
 </style>
 </head>
+
 <body>
 
-<!-- STEP 1 -->
-<div class="card" id="step1">
-  <h2>I've got something for u 💕</h2>
-  <button onclick="toCake()">What's that?</button>
+<!-- OPENING -->
+<div id="opening" class="center">
+  <h1>I've got something for u 💌</h1>
+  <button onclick="showCake()">What's that?</button>
 </div>
 
-<!-- STEP 2 -->
-<div class="card hidden" id="step2">
-  <p>Make a wish ✨</p>
-  <div class="cake" onclick="blowCandle()">🎂🕯️</div>
-  <p><small>(tap the cake)</small></p>
-</div>
-
-<!-- STEP 3 -->
-<div class="card hidden" id="step3">
-  <h2>Hai Kamu 💖</h2>
-  <p>Ada sesuatu yang pengen aku sampein 🎂</p>
-
-  <input id="inputNama" placeholder="Nama kamu 💕">
-  <input id="inputUmur" type="number" placeholder="Umur kamu 🎉">
-
-  <button onclick="showMessage()">Buka Ucapannya 💌</button>
-
-  <div class="hidden" id="hasil">
-    <p id="teksUcapan"></p>
+<!-- CAKE -->
+<div id="cake" class="center hidden">
+  <h2>Make a wish ✨</h2>
+  <div class="cake">
+    🎂
+    <div class="flame" id="flame" onclick="blowCandle()">🔥</div>
   </div>
+  <p id="hint">tiup lilinnya…</p>
+</div>
+
+<!-- MESSAGE -->
+<div id="message" class="center hidden">
+  <h2>Happy Birthday 🎉</h2>
+  <h3 id="name"></h3>
+
+  <input type="number" id="age" placeholder="Umur kamu">
+  <br><br>
+  <button onclick="showMessage()">Buka Ucapan</button>
+
+  <p id="secret" class="hidden"></p>
 </div>
 
 <script>
-function toCake(){
-  document.getElementById("step1").classList.add("hidden");
-  document.getElementById("step2").classList.remove("hidden");
+const nama = "Cinta"; // GANTI NAMA DIA
+document.getElementById("name").innerText = nama;
+
+let blowCount = 0;
+const maxBlow = 5;
+
+function showCake() {
+  document.getElementById("opening").classList.add("hidden");
+  document.getElementById("cake").classList.remove("hidden");
 }
 
-function blowCandle(){
-  document.querySelector(".cake").innerHTML="🎂✨";
-  spawnConfetti();
-  setTimeout(()=>{
-    document.getElementById("step2").classList.add("hidden");
-    document.getElementById("step3").classList.remove("hidden");
-  },1200);
+function blowCandle() {
+  blowCount++;
+  const flame = document.getElementById("flame");
+
+  flame.style.transform = `scale(${1 - blowCount * 0.15})`;
+  flame.style.opacity = `${1 - blowCount * 0.18}`;
+
+  if (blowCount >= maxBlow) {
+    flame.style.display = "none";
+    document.getElementById("hint").innerText = "✨ wish granted ✨";
+    setTimeout(() => {
+      document.getElementById("cake").classList.add("hidden");
+      document.getElementById("message").classList.remove("hidden");
+    }, 1200);
+  }
 }
 
-function showMessage(){
-  const nama = document.getElementById("inputNama").value;
-  const umur = document.getElementById("inputUmur").value;
-
-  if(!nama || !umur){
-    alert("Isi dulu yaa 😆💗");
+function showMessage() {
+  const age = document.getElementById("age").value;
+  if (!age) {
+    alert("Isi umurnya dulu ya 😄");
     return;
   }
 
-  const pesan = `
-Maaf ya kalo kesannya maksain banget hehehe.
-To be honest, aku sebenernya bukan suka doang sama kamu,
-bisa dikatakan lebih dari itu.
+  const text = `
+Selamat ulang tahun yang ke-${age} 🎉
 
-Karena kamu muncul pada saat aku lagi nggak kepengen sama siapa-siapa,
-tapi semenjak kemunculan kamu,
-entah kenapa hati ini rasanya menggebu-gebu lagi.
-  `;
+Sebenernya aku cuma pengen bilang satu hal kecil di hari spesial ini.
+Semoga di umur yang baru, kamu selalu dikelilingi hal-hal baik,
+senyum yang tulus, dan orang-orang yang bikin kamu nyaman.
 
-  document.getElementById("teksUcapan").innerHTML =
-    `Selamat ulang tahun yang ke <b>${umur}</b>, <b>${nama}</b> 💖🎉<br><br>` +
-    pesan.replace(/\n/g,"<br>");
+Terima kasih ya, udah jadi seseorang yang kehadirannya
+tanpa sadar bisa bikin hari orang lain terasa lebih hangat.
+`;
 
-  document.getElementById("hasil").classList.remove("hidden");
-
-  setInterval(spawnBalloon,700);
-  setInterval(spawnHeart,500);
-}
-
-function spawnBalloon(){
-  const e=document.createElement("div");
-  e.className="balloon";
-  e.innerHTML="🎈";
-  e.style.left=Math.random()*100+"vw";
-  e.style.animationDuration=(4+Math.random()*3)+"s";
-  document.body.appendChild(e);
-  setTimeout(()=>e.remove(),7000);
-}
-
-function spawnHeart(){
-  const e=document.createElement("div");
-  e.className="heart";
-  e.innerHTML="💖";
-  e.style.left=Math.random()*100+"vw";
-  e.style.animationDuration=(4+Math.random()*3)+"s";
-  document.body.appendChild(e);
-  setTimeout(()=>e.remove(),7000);
-}
-
-function spawnConfetti(){
-  for(let i=0;i<25;i++){
-    const e=document.createElement("div");
-    e.className="confetti";
-    e.style.left=Math.random()*100+"vw";
-    e.style.background=["#ff5e99","#ffd6e8","#ffeef6"][Math.floor(Math.random()*3)];
-    e.style.animationDuration=(3+Math.random()*2)+"s";
-    document.body.appendChild(e);
-    setTimeout(()=>e.remove(),5000);
-  }
+  const secret = document.getElementById("secret");
+  secret.innerText = text;
+  secret.classList.remove("hidden");
 }
 </script>
 
