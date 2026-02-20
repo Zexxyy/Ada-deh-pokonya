@@ -1,34 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
   background: linear-gradient(120deg, #ffdee9, #b5fffc);
   height: 100vh;
   overflow: hidden;
 }
 
+/* CENTER */
 .center {
   text-align: center;
-  margin-top: 20vh;
+  padding: 5vh 5vw;
 }
 
-.hidden {
-  display: none;
-}
-
+/* BUTTON */
 button {
-  padding: 12px 24px;
+  padding: 14px 28px;
   border: none;
-  border-radius: 25px;
+  border-radius: 30px;
   background: #ff6f91;
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
 }
 
@@ -36,55 +39,114 @@ button:hover {
   background: #ff4f7a;
 }
 
+.hidden {
+  display: none;
+}
+
+/* OPENING */
+#opening h1 {
+  font-size: 8vw;
+  margin-bottom: 20px;
+}
+
+/* CAKE */
+#cake h2 {
+  font-size: 6vw;
+}
+
 .cake {
-  font-size: 90px;
+  font-size: 35vw;
   position: relative;
 }
 
 .flame {
-  font-size: 32px;
+  font-size: 10vw;
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
   cursor: pointer;
   animation: flicker 1s infinite;
-  transition: transform 0.3s, opacity 0.3s;
 }
 
 @keyframes flicker {
-  0% { transform: rotate(-5deg); }
-  50% { transform: rotate(5deg); }
-  100% { transform: rotate(-5deg); }
+  0% { transform: translateX(-50%) rotate(-5deg); }
+  50% { transform: translateX(-50%) rotate(5deg); }
+  100% { transform: translateX(-50%) rotate(-5deg); }
+}
+
+/* MESSAGE */
+#message h2 {
+  font-size: 7vw;
+}
+
+#name {
+  font-size: 6vw;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 20px;
+  border: none;
+  width: 50vw;
+  text-align: center;
 }
 
 #secret {
-  margin-top: 20px;
-  max-width: 320px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 25px;
+  font-size: 4.5vw;
   line-height: 1.6;
   animation: fadeIn 1.5s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-input {
-  padding: 10px;
-  border-radius: 20px;
-  border: none;
-  text-align: center;
-  width: 140px;
-  margin-top: 10px;
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: red;
+  top: -10px;
+  animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* BALLOON */
+.balloon {
+  position: fixed;
+  bottom: -100px;
+  font-size: 8vw;
+  animation: floatUp 10s linear infinite;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-120vh);
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- EFFECTS -->
+<div id="effects"></div>
+
 <!-- OPENING -->
 <div id="opening" class="center">
-  <h1>I've got something for u 💌</h1>
-  <button onclick="showCake()">What's that?</button>
+  <h1>I’ve got something for u 💌</h1>
+  <button onclick="showCake()">What’s that?</button>
 </div>
 
 <!-- CAKE -->
@@ -94,23 +156,23 @@ input {
     🎂
     <div class="flame" id="flame" onclick="blowCandle()">🔥</div>
   </div>
-  <p id="hint">tiup lilinnya…</p>
+  <p style="font-size:4vw">tiup lilinnya…</p>
 </div>
 
 <!-- MESSAGE -->
 <div id="message" class="center hidden">
   <h2>Happy Birthday 🎉</h2>
-  <h3 id="name"></h3>
+  <div id="name"></div>
 
   <input type="number" id="age" placeholder="Umur kamu">
   <br><br>
   <button onclick="showMessage()">Buka Ucapan</button>
 
-  <p id="secret" class="hidden"></p>
+  <div id="secret" class="hidden"></div>
 </div>
 
 <script>
-const nama = "Cinta"; // GANTI NAMA DIA
+const nama = "NamaDia"; // GANTI NAMA DIA
 document.getElementById("name").innerText = nama;
 
 let blowCount = 0;
@@ -124,17 +186,15 @@ function showCake() {
 function blowCandle() {
   blowCount++;
   const flame = document.getElementById("flame");
-
-  flame.style.transform = `scale(${1 - blowCount * 0.15})`;
+  flame.style.transform = `translateX(-50%) scale(${1 - blowCount * 0.15})`;
   flame.style.opacity = `${1 - blowCount * 0.18}`;
 
   if (blowCount >= maxBlow) {
     flame.style.display = "none";
-    document.getElementById("hint").innerText = "✨ wish granted ✨";
     setTimeout(() => {
       document.getElementById("cake").classList.add("hidden");
       document.getElementById("message").classList.remove("hidden");
-    }, 1200);
+    }, 1000);
   }
 }
 
@@ -160,6 +220,32 @@ tanpa sadar bisa bikin hari orang lain terasa lebih hangat.
   secret.innerText = text;
   secret.classList.remove("hidden");
 }
+
+/* EFFECT GENERATOR */
+function createEffects() {
+  const effects = document.getElementById("effects");
+
+  for (let i = 0; i < 25; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = `hsl(${Math.random()*360},100%,70%)`;
+    c.style.animationDuration = (3 + Math.random()*3) + "s";
+    effects.appendChild(c);
+  }
+
+  const balloons = ["🎈","🎈","🎈"];
+  balloons.forEach(() => {
+    const b = document.createElement("div");
+    b.className = "balloon";
+    b.innerText = "🎈";
+    b.style.left = Math.random() * 90 + "vw";
+    b.style.animationDuration = (8 + Math.random()*5) + "s";
+    effects.appendChild(b);
+  });
+}
+
+createEffects();
 </script>
 
 </body>
